@@ -1,0 +1,10 @@
+yfinance 
+pandas 
+numpy 
+scipy 
+statsmodels 
+pykalman 
+plotly 
+dash 
+ta
+matplotlib

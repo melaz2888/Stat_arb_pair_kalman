@@ -69,7 +69,7 @@ def top_sector_pairs(prices: pd.DataFrame, max_pairs: int = MAX_PAIRS) -> List[T
     best = sorted(unique_scored.items(), key=lambda kv: kv[1], reverse=True)[:max_pairs]
     return [p for p, _ in best]
 
-# ------------- KALMAN + BACKTEST (unchanged logic) ----------------------
+# ------------- KALMAN + BACKTEST  ----------------------
 
 def kalman_beta(y: pd.Series, x: pd.Series, q=1e-5, r=1e-3):
     mask = y.notna() & x.notna()
