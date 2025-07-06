@@ -1,45 +1,42 @@
-# Stat-Arb Pairs Trading via Kalman-Filter Spread
+# STAT\_ARB\_PAIR\_KALMAN
 
-A research-quality Python implementation of a classic statistical-arbitrage “pairs” strategy.  
-Estimate a time-varying hedge ratio with a Kalman filter, trade mean-reversion in the residual spread, and evaluate robustness across parameters.
-
----
-
-## Repository Structure
-.
-├── kalman.py           # End-to-end script: data fetch → pair-selection → backtest → grid-search  
-├── requirements.txt    # Python dependencies  
-├── trade_log.csv       # Output: per-trade records (entry, exit, z-scores, PnL, etc.)  
-├── param_grid.csv      # Output: total PnL for each (entry_z, exit_z) combination  
-└── README.md           # This document
+Minimal sandbox for **pairs‑trading research** (correlation → ADF cointegration → static *vs* dynamic hedge ratio via Kalman filter).
 
 ---
 
-## Installation
+## Folder layout
 
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/your-username/statarb-kalman.git
-   cd statarb-kalman
-   ```
+| path                    | what it is                                                          |
+| ----------------------- | ------------------------------------------------------------------- |
+| `trading_utils_corr.py` | library of helpers (fetch prices, ADF, OLS β, Kalman β, back‑tests) |
+| `notebook_corr.ipynb`   | step‑by‑step demo notebook                                          |
+| `requirements.txt`      | pip dependencies                                                    |
+| `.venv/` (optional)     | your local virtual‑environment                                      |
 
-2. Create and activate a virtual environment:
-   ```bash
-   python3 -m venv .venv
-   source .venv/bin/activate     # macOS/Linux
-   .\.venv\Scripts\activate      # Windows
-   ```
-
-3. Install the requirements:
-   ```bash
-   pip install -r requirements.txt
-   ```
+All other folders (`__pycache__`, `.ipynb_checkpoints`) are auto‑generated and can be ignored or added to a `.gitignore`.
 
 ---
 
-## Usage
+## Quick start
 
-Run the main script:
 ```bash
-python kalman.py
+# clone / unzip the repo, then:
+python -m venv .venv             # create venv (Windows: py -m venv .venv)
+source .venv/bin/activate        # activate (Windows: .venv\Scripts\activate)
+
+pip install --upgrade pip
+pip install -r requirements.txt  # yfinance, pandas, numpy, statsmodels, tqdm, matplotlib, seaborn
+
+jupyter notebook notebook_corr.ipynb  # or jupyter lab / VSCode "Run All"
 ```
+
+That’s it: run the cells and you’ll see pair selection, hedge‑ratio plots, and back‑test equity curves for static and Kalman‑dynamic strategies.
+
+---
+
+### Notes
+
+* **No extra config** needed; Yahoo Finance provides all price data on the fly.
+* The Kalman implementation is pure‑NumPy—no external `pykalman` dependency.
+* Edit `notebook_corr.ipynb` or `trading_utils_corr.py` to tweak the universe, ADF threshold, or budget cap.
+* Feel free to restructure the repo—paths are hard‑coded only in the notebook imports.
