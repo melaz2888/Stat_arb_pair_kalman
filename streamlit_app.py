@@ -58,16 +58,18 @@ def _load_price_data(tickers: list[str], start: str, end: str) -> pd.DataFrame:
         df = tu.fetch_prices(tickers, start, end)
         return df
     except Exception:
-        # fallback to synthetic random walks as used in the backtester
-        st.warning("Unable to download prices; falling back to synthetic data.")
-        np.random.seed(42)
-        idx = pd.date_range(start, end)
-        data: dict[str, np.ndarray] = {}
-        for t in tickers:
-            base = 100 + 5 * np.random.randn()
-            series = base + np.cumsum(np.random.normal(0, 1, len(idx)))
-            data[t] = series
-        return pd.DataFrame(data, index=idx)
+        return "impossible to fetch data"
+        
+    #     # fallback to synthetic random walks as used in the backtester
+    #     st.warning("Unable to download prices; falling back to synthetic data.")
+    #     np.random.seed(42)
+    #     idx = pd.date_range(start, end)
+    #     data: dict[str, np.ndarray] = {}
+    #     for t in tickers:
+    #         base = 100 + 5 * np.random.randn()
+    #         series = base + np.cumsum(np.random.normal(0, 1, len(idx)))
+    #         data[t] = series
+    #     return pd.DataFrame(data, index=idx)
 
 
 def _format_date(d: dt.date) -> str:
