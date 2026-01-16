@@ -1,42 +1,81 @@
-# STAT\_ARB\_PAIR\_KALMAN
+STAT_ARB_PAIR_KALMAN
 
-Minimal sandbox for **pairs‑trading research** (correlation → ADF cointegration → static *vs* dynamic hedge ratio via Kalman filter).
+Minimal sandbox for pairs-trading research (correlation -> ADF cointegration -> static vs dynamic hedge ratio via Kalman filter).
 
----
+Recent Updates
 
-## Folder layout
+The project has been updated to include a Streamlit Dashboard. This replaces the manual notebook workflow with an interactive user interface that allows for:
 
-| path                    | what it is                                                          |
-| ----------------------- | ------------------------------------------------------------------- |
-| `trading_utils_corr.py` | library of helpers (fetch prices, ADF, OLS β, Kalman β, back‑tests) |
-| `notebook_corr.ipynb`   | step‑by‑step demo notebook                                          |
-| `requirements.txt`      | pip dependencies                                                    |
-| `.venv/` (optional)     | your local virtual‑environment                                      |
+Interactive Controls: Input tickers, select training/test windows via calendar widgets, and adjust risk parameters.
 
-All other folders (`__pycache__`, `.ipynb_checkpoints`) are auto‑generated and can be ignored or added to a `.gitignore`.
+Enhanced Metrics: Automatic calculation of Sharpe Ratio, Cumulative P&L, and Drawdowns.
 
----
+Threshold Optimization: Sliders to adjust entry and exit z-score thresholds dynamically.
 
-## Quick start
+Important: The notebook_corr.ipynb file included in this repository is legacy code. It is not compatible with the recent updates to trading_utils_corr.py and should be ignored. Please use the Streamlit application for all backtesting.
 
-```bash
-# clone / unzip the repo, then:
-python -m venv .venv             # create venv (Windows: py -m venv .venv)
-source .venv/bin/activate        # activate (Windows: .venv\Scripts\activate)
+Folder layout
+
+path
+
+description
+
+streamlit_app.py
+
+Main Streamlit application entry point
+
+trading_utils_corr.py
+
+Library of helpers (fetch prices, ADF, OLS, Kalman, back-tests)
+
+requirements.txt
+
+Python dependencies
+
+images/
+
+Screenshots and assets
+
+notebook_corr.ipynb
+
+Deprecated legacy notebook
+
+Quick start (Windows)
+
+Create a virtual environment:
+
+python -m venv .venv
+
+
+Activate the environment:
+
+.venv\Scripts\activate
+
+
+Install dependencies:
 
 pip install --upgrade pip
-pip install -r requirements.txt  # yfinance, pandas, numpy, statsmodels, tqdm, matplotlib, seaborn
+pip install -r requirements.txt
 
-jupyter notebook notebook_corr.ipynb  # or jupyter lab / VSCode "Run All"
-```
 
-That’s it: run the cells and you’ll see pair selection, hedge‑ratio plots, and back‑test equity curves for static and Kalman‑dynamic strategies.
+Run the dashboard:
 
----
+streamlit run app.py
 
-### Notes
 
-* **No extra config** needed; Yahoo Finance provides all price data on the fly.
-* The Kalman implementation is pure‑NumPy—no external `pykalman` dependency.
-* Edit `notebook_corr.ipynb` or `trading_utils_corr.py` to tweak the universe, ADF threshold, or budget cap.
-* Feel free to restructure the repo—paths are hard‑coded only in the notebook imports.
+Quick start (Linux / macOS)
+
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+streamlit run app.py
+
+
+Notes
+
+Data Source: No extra config is needed; Yahoo Finance (yfinance) provides all price data on the fly.
+
+Kalman Implementation: The filter logic is pure-NumPy. There is no dependency on the pykalman library.
+
+Customization: You can edit trading_utils_corr.py to tweak the ADF thresholds, budget caps, or underlying calculation logic.
